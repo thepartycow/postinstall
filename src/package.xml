@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Jobs Microsite</fullName>
+    <apiAccessLevel>Unrestricted</apiAccessLevel>
+    <description>This application hosts a Jobs website inside your org.
+1. Your org must contain a Force.com Site named &quot;Jobs&quot;
+2. After installing the package, click the [Configure] button.</description>
+    <namespacePrefix>isvpostinstall</namespacePrefix>
+    <postInstallClass>PostInstallHandler</postInstallClass>
+    <setupWeblink>Configure</setupWeblink>
+    <types>
+        <members>ConfigureController</members>
+        <members>MetadataService</members>
+        <members>MetadataServiceTest</members>
+        <members>PostInstallHandler</members>
+        <members>PostInstallHandlerTest</members>
+        <members>PostUninstallHandler</members>
+        <members>PostUninstallHandlerTest</members>
+        <members>ToolingService</members>
+        <members>ToolingServiceTest</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Configure</members>
+        <members>JobHelp</members>
+        <members>JobSplash</members>
+        <members>PortalHome</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>Jobs</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>Job__c.Content__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>Job__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Configure</members>
+        <members>WidgetSplash</members>
+        <name>CustomPageWebLink</name>
+    </types>
+    <types>
+        <members>Job__c</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Job__c-Job Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>Job__c.All</members>
+        <name>ListView</name>
+    </types>
+    <types>
+        <members>JobManagement</members>
+        <members>SiteComponents</members>
+        <name>PermissionSet</name>
+    </types>
+    <uninstallClass>PostUninstallHandler</uninstallClass>
+    <version>32.0</version>
+</Package>

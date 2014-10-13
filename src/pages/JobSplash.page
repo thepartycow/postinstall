@@ -1,0 +1,33 @@
+<apex:page showHeader="false" tabStyle="Job__c">
+
+    <style>
+        div.apexp {
+            max-width: 800px;
+        }
+        
+        td#bodyCell {
+            background:url('https://na17.salesforce.com/img/in-page_clouds.png') left top no-repeat;
+        }
+    </style>
+
+    <apex:pageBlock mode="maindetail" title="Introducing Jobs">
+        <apex:pageBlockSection columns="1">
+            <apex:pageBlockSectionItem >
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur risus mauris, imperdiet ac convallis at, commodo id massa. Etiam laoreet accumsan ante in ornare. Praesent volutpat velit in nisl hendrerit pellentesque eu non risus. Suspendisse eleifend ex scelerisque egestas facilisis. Aliquam sagittis arcu ut nisl cursus feugiat. Nullam ligula neque, ullamcorper in nisi ut, sollicitudin congue erat. Maecenas quis tincidunt est. Morbi viverra in augue sed aliquet. Maecenas nunc sapien, rutrum ac turpis id, ultricies hendrerit lacus. Pellentesque rhoncus eleifend ipsum, ac dapibus dui gravida eu.</p>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection columns="1" title="More about Jobs">
+            <apex:pageBlockSectionItem >
+                <p>Donec scelerisque malesuada sapien eu maximus. Cras quis erat felis. Nulla eleifend tristique nulla ut vehicula. Nam feugiat posuere mi quis aliquam. Morbi a felis eu orci condimentum dapibus. Proin finibus lorem magna, ac rhoncus elit pharetra sit amet. Mauris metus neque, vulputate vitae eleifend a, sodales id arcu. Nullam at hendrerit mauris.</p>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection columns="1">
+            <apex:pageBlockSectionItem >
+                <apex:image value="{!URLFOR('/img/sales/forecasting/forecasting_splash_hierarchy.png')}" />
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+</apex:page>

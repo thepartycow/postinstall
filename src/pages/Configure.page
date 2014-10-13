@@ -1,0 +1,108 @@
+<apex:page controller="ConfigureController" action="{!detectRemoteSiteSetting}">
+    <style>
+    	.infoM4 .msgIcon, .infoSmall {
+            background: url('{!URLFOR("/img/loading.gif")}');
+        }
+    </style>
+    <apex:form >
+        <apex:pageBlock rendered="{!NOT(HasRemoteSiteSetting)}">
+            
+            <apex:pageMessage strength="1" severity="INFO" title="Installing Remote Site Setting for {!PodProtocolAndHost}" />
+            
+            <img src="{!URLFOR('/s.gif')}" onload="setTimeout(createRemoteSite, 5000);" />
+            
+            <script>
+                function createRemoteSite() {
+                    // Calls the Metdata API from JavaScript to create the Remote Site Setting to permit Apex callouts
+                    var binding = new XMLHttpRequest();
+                    var request = ''
+                        + '<?xml version="1.0" encoding="utf-8"?>'
+                        + '<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
+                        + '<env:Header>'
+                        + '<urn:SessionHeader xmlns:urn="http://soap.sforce.com/2006/04/metadata">'
+                        + '<urn:sessionId>{!$Api.Session_ID}</urn:sessionId>'
+                        + '</urn:SessionHeader>'
+                        + '</env:Header>'
+                        + '<env:Body>'
+                        + '<createMetadata xmlns="http://soap.sforce.com/2006/04/metadata">'
+                        + '<metadata xsi:type="RemoteSiteSetting">'
+                        + '<fullName>Metadata_API</fullName>'
+                        + '<description>Metadata API Remote Site Setting</description>'
+                        + '<disableProtocolSecurity>false</disableProtocolSecurity>'
+                        + '<isActive>true</isActive>'
+                        + '<url>{!PodProtocolAndHost}</url>'
+                        + '</metadata>'
+                        + '</createMetadata>'
+                        + '</env:Body>'
+                        + '</env:Envelope>'
+                    ;
+                    binding.open('POST', 'https://' + window.location.host + '/services/Soap/m/31.0');
+                    binding.setRequestHeader('SOAPAction','""');
+                    binding.setRequestHeader('Content-Type', 'text/xml');
+                    binding.onreadystatechange =
+                        function() {
+                            if(this.readyState==4) {
+                                var parser = new DOMParser();
+                                var doc  = parser.parseFromString(this.response, 'application/xml');
+                                var errors = doc.getElementsByTagName('errors');
+                                errors.length ? alert(errors) : window.location.reload();
+                            }
+                        }
+                    binding.send(request);
+                }
+            </script>
+        </apex:pageBlock>
+        
+        <apex:pageBlock rendered="{!HasRemoteSiteSetting}">
+            
+            <apex:actionFunction reRender="StatusPortalPage" action="{!setupPortalPage}" name="setupPortalPage" oncomplete="setupPermission();" status="StatusPortalPage" />
+            <apex:actionStatus id="StatusPortalPage">
+                <apex:facet name="start"><apex:outputPanel >
+                    <apex:pageMessage strength="1" severity="INFO" title="Installing Portal Page" />
+                </apex:outputPanel></apex:facet>
+                <apex:facet name="stop"><apex:outputPanel >
+                    <apex:pageMessage rendered="{!!HasPortalPage}" strength="1" severity="ERROR" title="Portal Page not installed" />
+                    <apex:pageMessage rendered="{!HasPortalPage}" strength="1" severity="CONFIRM" title="Successfully installed Portal Page" />
+                </apex:outputPanel></apex:facet>
+            </apex:actionStatus>
+            
+            <apex:actionFunction reRender="StatusPermission" action="{!setupPermission}" name="setupPermission" oncomplete="setupCustomField();" status="StatusPermission" />
+            <apex:actionStatus id="StatusPermission">
+                <apex:facet name="start"><apex:outputPanel >
+                    <apex:pageMessage strength="1" severity="INFO" title="Installing Permission" />
+                </apex:outputPanel></apex:facet>
+                <apex:facet name="stop"><apex:outputPanel >
+                    <apex:pageMessage rendered="{!!HasPermission}" strength="1" severity="ERROR" title="Permission not installed" />
+                    <apex:pageMessage rendered="{!HasPermission}" strength="1" severity="CONFIRM" title="Successfully installed Permission" />
+                </apex:outputPanel></apex:facet>
+            </apex:actionStatus>
+            
+            <apex:actionFunction reRender="StatusCustomField" action="{!setupCustomField}" name="setupCustomField" oncomplete="setupMasterData();" status="StatusCustomField" />
+            <apex:actionStatus id="StatusCustomField">
+                <apex:facet name="start"><apex:outputPanel >
+                    <apex:pageMessage strength="1" severity="INFO" title="Installing Custom Field" />
+                </apex:outputPanel></apex:facet>
+                <apex:facet name="stop"><apex:outputPanel >
+                    <apex:pageMessage rendered="{!!HasPermission}" strength="1" severity="ERROR" title="Custom Field not installed" />
+                    <apex:pageMessage rendered="{!HasPermission}" strength="1" severity="CONFIRM" title="Successfully installed Custom Field" />
+                </apex:outputPanel></apex:facet>
+            </apex:actionStatus>
+            
+            <apex:actionFunction reRender="StatusMasterData" action="{!setupMasterData}" name="setupMasterData" oncomplete="" status="StatusMasterData" />
+            <apex:actionStatus id="StatusMasterData">
+                <apex:facet name="start"><apex:outputPanel >
+                    <apex:pageMessage strength="1" severity="INFO" title="Installing Master Data" />
+                </apex:outputPanel></apex:facet>
+                <apex:facet name="stop"><apex:outputPanel >
+                    <apex:pageMessage rendered="{!!HasMasterData}" strength="1" severity="ERROR" title="Master Data not installed" />
+                    <apex:pageMessage rendered="{!HasMasterData}" strength="1" severity="CONFIRM" title="Successfully installed Master Data" />
+                </apex:outputPanel></apex:facet>
+            </apex:actionStatus>
+            
+            <img src="{!URLFOR('/s.gif')}" onload="setupPortalPage();" />
+            
+            <apex:outputLink value="{!SiteProtocolAndHost}{!$Page.PortalHome}">View Jobs Site</apex:outputLink>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

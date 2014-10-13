@@ -1,0 +1,10 @@
+<apex:page sidebar="false">
+    <style>
+        td.noSidebarCell {
+            background:url("{!URLFOR('/img/in-page_clouds.png')}") left top no-repeat;
+        }
+    </style>
+    <apex:pageBlock mode="maindetail">
+        <apex:image value="{!URLFOR('/img/keys_new_camp.gif')}" />
+    </apex:pageBlock>
+</apex:page>

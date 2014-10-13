@@ -1,0 +1,16 @@
+<apex:page standardController="Job__c" recordSetvar="jobs">
+    <style>
+        body.sfdcBody {background: grey; margin: 10px;}
+        div#AppBodyHeader {display: none;}
+    </style>
+    <apex:form >
+        <apex:sectionHeader title="We're hiring!" />
+        <apex:pageBlock mode="maindetail">
+            <apex:pageBlockTable value="{!jobs}" var="job">
+                <apex:column ><apex:commandButton value="Apply" /></apex:column>
+                <apex:column width="200" value="{!job.Name}" />
+                <apex:column value="{!job.Content__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
